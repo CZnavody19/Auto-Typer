@@ -1,11 +1,9 @@
-from curses.ascii import isupper
 from pytesseract import image_to_string, pytesseract
 from PIL import ImageGrab
 from cv2 import cvtColor, COLOR_BGR2GRAY
 from numpy import array
 from time import sleep
-from keyboard import add_hotkey, wait, press, release, hook_key
-from random import random
+from keyboard import add_hotkey, wait, hook_key, write
 from string import ascii_lowercase
 
 def parse_bool(input):
@@ -20,6 +18,9 @@ def parse_bool(input):
 repeat = int(input("Repeat (num): "))
 reverse = parse_bool(input("Reverse (bool): "))
 contain = input("Contain (char): ")
+
+with open("blocked_keys.txt", "r") as blocked_keys_txt:
+    additional_blocked_keys = blocked_keys_txt.read()
 
 text = ""
 
@@ -36,7 +37,7 @@ def start():
 
     sleep(5)
 
-    for letter in ascii_lowercase + " ,":
+    for letter in ascii_lowercase + additional_blocked_keys:
         hook_key(letter, typeLetter, suppress=True)
 
     text = capture()
@@ -47,16 +48,7 @@ def typeLetter(param):
     global text
     if len(text) != 0:
         if param.event_type == "down":
-            if text[0].isupper():
-                press("shift")
-                press(text[0].lower())
-                sleep(random()*0.1)
-                release(text[0].lower())
-                release("shift")
-            else:
-                press(text[0].lower())
-                sleep(random()*0.1)
-                release(text[0].lower())
+            write(text[0])
             text = text[::-1][:-1][::-1]
 
 def capture():
