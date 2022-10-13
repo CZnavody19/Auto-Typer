@@ -17,7 +17,7 @@ The pip packages needed are [here](requirements.txt). Install them with `pip ins
 - Enter the number of times to repeat the text
 - Enter wherever to reverse the text or not
 - Enter what characters the text should contain (Enter for everything)
-- Enter What characters the text should begin with (Enter for everything)
+- Enter what characters the text should begin with (Enter for everything)
 
 - Press `Windows Shift S` and select the area of the text (You have about 5 seconds from pressing the shortcut to the program starting)
 - Wait until the program displays the text
