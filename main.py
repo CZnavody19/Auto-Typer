@@ -15,9 +15,10 @@ def parse_bool(input):
     else:
         return None
 
-repeat = int(input("Repeat (num): "))
-reverse = parse_bool(input("Reverse (bool): "))
-contain = input("Contain (char): ")
+repeat = int(input("Repeat: "))
+reverse = parse_bool(input("Reverse: "))
+contain = input("Contain: ")
+begins = input("Begins with: ")
 
 with open("blocked_keys.txt", "r") as blocked_keys_txt:
     additional_blocked_keys = blocked_keys_txt.read()
@@ -62,13 +63,20 @@ def capture():
 
         words = text.split()
 
-        if contain == "":
+        if contain == "" and begins == "":
             return ' '.join(words)
 
-        else:
+        elif contain != "":
             out = []
             for word in words:
                 if contain in word:
+                    out.append(word)
+            return ' '.join(out)
+
+        elif begins != "":
+            out = []
+            for word in words:
+                if word[0] == begins:
                     out.append(word)
             return ' '.join(out)
 
