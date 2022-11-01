@@ -13,13 +13,23 @@ The pip packages needed are [here](requirements.txt). Install them with `pip ins
 
 ## How to use
 
-- Run the [script](main.py)
+### Command Line
+- Run the [comand line script](cli.py)
 - Enter the number of times to repeat the text
 - Enter wherever to reverse the text or not
-- Enter what characters the text should contain (Enter for everything)
-- Enter what characters the text should begin with (Enter for everything)
+- Enter what characters the text should contain (`Enter` for everything)
+- Enter what characters the text should begin with (`Enter` for everything)
 
-- Press `Windows Shift S` and select the area of the text (You have about 5 seconds from pressing the shortcut to the program starting)
+- Press `Windows Shift S` and select the area of the text
+- Press `Enter` to detect the text
 - Wait until the program displays the text
+- Press `Enter` to start typing
 - Then start typing, the program will "rewrite" the keys to the correct ones (By default only letters are enabled. To enable additional keys enter them to the [file](blocked_keys.txt).)
 - At the end press `Ctrl Enter` to stop the program
+
+### GUI
+- Run the [GUI script](gui.py)
+- Configure the parameters
+- Press `Windows Shift S` and select the area of the text
+- Click `Capture` and review the text
+- Click `Start` and start typing, the program will "rewrite" the keys to the correct ones (By default only letters are enabled. To enable additional keys enter them to the [file](blocked_keys.txt).)
