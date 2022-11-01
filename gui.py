@@ -1,6 +1,9 @@
+from time import sleep
 import tkinter as tk
 from types import NoneType
 import typer
+from threading import Thread
+from keyboard import press, press_and_release, release
 
 root = tk.Tk()
 
@@ -47,6 +50,51 @@ def start():
         edited_text = edited_label.get("1.0",tk.END)
         edited_text = edited_text[:-1]
         typer.start_typing(edited_text, blocked_keys)
+
+def open_settings():
+    def on_closing():
+        with open("blocked_keys.txt", "w") as blocked_keys_txt:
+            blocked_keys_txt.write(blocked_keys.get("1.0",tk.END)[:-1])
+        
+        settings_window.destroy()
+    
+    settings_window = tk.Toplevel(root)
+    settings_window.grab_set()
+    settings_window.title("Auto Typer Settings")
+    settings_window.geometry('350x100')
+    settings_window.resizable(False, False)
+    settings_window.protocol("WM_DELETE_WINDOW", on_closing)
+
+    blocked_text = tk.Label(settings_window, text="Additional blocked keys: ")
+    blocked_text.pack(side=tk.LEFT)
+    blocked_keys = tk.Text(settings_window, height=1)
+    blocked_keys.pack(side=tk.LEFT)
+
+    with open("blocked_keys.txt", "r") as blocked_keys_txt:
+        blocked_keys.insert(tk.END, blocked_keys_txt.read())
+        
+
+
+menubar = tk.Menu(root)
+root.config(menu=menubar)
+
+file_menu = tk.Menu(menubar, tearoff=False)
+
+file_menu.add_command(
+    label='Settings',
+    command=open_settings,
+)
+file_menu.add_command(
+    label='Exit',
+    command=root.destroy,
+)
+
+menubar.add_cascade(
+    label="File",
+    menu=file_menu,
+    underline=0
+)
+
 
 repeat_label = tk.Label(first_line, text="Repeat: ")
 repeat_label.pack(side=tk.LEFT)
