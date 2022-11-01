@@ -7,7 +7,7 @@ You need to download [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
 
 **Warning:** You need to install to the default location which is `C:\\Program Files\\Tesseract-OCR`
  
-You also need [Python](https://www.python.org/) with pip.
+You also need [Python](https://www.python.org/) with pip and tkinter.
 
 The pip packages needed are [here](requirements.txt). Install them with `pip install -r requirements.txt`
 
