@@ -22,11 +22,11 @@ seventh_line = tk.Frame()
 text = ""
 edited_label = tk.Text(sixth_line, width=40, height=5)
 
-def capture(repeat, reverse, begins, contain):
+def capture(repeat, reverse, begins, contain, nospace):
     global text
     global edited_label
 
-    text = typer.capture(repeat, reverse, contain, begins)
+    text = typer.capture(repeat, reverse, contain, begins, nospace)
     
     if(text != NoneType and text != None):
         for widget in sixth_line.winfo_children():
@@ -112,6 +112,14 @@ reverse_select = tk.Checkbutton(second_line, variable=reverse_value, onvalue=Tru
 reverse_select.pack(side=tk.LEFT)
 
 
+nospace_label = tk.Label(second_line, text="No spaces: ")
+nospace_label.pack(side=tk.LEFT)
+
+nospace_value = tk.BooleanVar()
+nospace_select = tk.Checkbutton(second_line, variable=nospace_value, onvalue=True, offvalue=False)
+nospace_select.pack(side=tk.LEFT)
+
+
 letter_value = tk.IntVar(value=0)
 begins_value = tk.StringVar()
 contains_value = tk.StringVar()
@@ -148,7 +156,7 @@ letter_select.pack(side=tk.LEFT)
 letter_select = tk.Radiobutton(third_line, text="None", variable=letter_value, command=select_option,value=0)
 letter_select.pack(side=tk.LEFT)
 
-capture_button = tk.Button(fifth_line, text ="Capture", command = lambda: capture(int(repeat_value.get()), bool(reverse_value.get()), begins_value.get(), contains_value.get()))
+capture_button = tk.Button(fifth_line, text ="Capture", command = lambda: capture(int(repeat_value.get()), bool(reverse_value.get()), begins_value.get(), contains_value.get(), bool(nospace_value.get())))
 capture_button.pack(side=tk.LEFT)
 
 start_button = tk.Button(seventh_line, text ="Start", command = lambda: start())

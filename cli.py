@@ -12,6 +12,7 @@ def parse_bool(input):
 def main():
     repeat = int(input("Repeat: "))
     reverse = parse_bool(input("Reverse: "))
+    nospace = parse_bool(input("No spaces: "))
     contain = input("Contain: ")
     begins = input("Begins with: ")
 
@@ -19,7 +20,7 @@ def main():
         additional_blocked_keys = blocked_keys_txt.read()
 
     input("Enter to parse clipboard image: ")
-    text = typer.capture(repeat, reverse, contain, begins)
+    text = typer.capture(repeat, reverse, contain, begins, nospace)
 
     print("Text to type: " + text)
 

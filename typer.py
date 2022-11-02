@@ -23,7 +23,7 @@ def typeLetter(param):
             write(text[0])
             text = text[::-1][:-1][::-1]
 
-def capture(repeat, reverse, contain, begins):
+def capture(repeat, reverse, contain, begins, nospace):
     screenshot = ImageGrab.grabclipboard()
     if(screenshot != None):
         text = image_to_string(cvtColor(array(screenshot), COLOR_BGR2GRAY))
@@ -31,6 +31,9 @@ def capture(repeat, reverse, contain, begins):
         if reverse:
             text = text[:-1]
             text = text[::-1]
+
+        if nospace:
+            text = text.replace(" ", "")
 
         words = text.split()
 
