@@ -24,7 +24,7 @@ The pip packages needed are [here](requirements.txt). Install them with `pip ins
 - Press `Enter` to detect the text
 - Wait until the program displays the text
 - Press `Enter` to start typing
-- Then start typing, the program will "rewrite" the keys to the correct ones (By default only letters are enabled. To enable additional keys enter them to the [file](blocked_keys.txt).)
+- Then start typing, the program will "rewrite" the keys to the correct ones (By default only letters are enabled. To enable additional keys enter them to the [file](options.json).)
 - At the end press `Ctrl Enter` to stop the program
 
 ### GUI
@@ -32,4 +32,5 @@ The pip packages needed are [here](requirements.txt). Install them with `pip ins
 - Configure the parameters
 - Press `Windows Shift S` and select the area of the text
 - Click `Capture` and review the text
-- Click `Start` and start typing, the program will "rewrite" the keys to the correct ones (By default only letters are enabled. To enable additional keys enter them to the [file](blocked_keys.txt).)
+- Click `Start` and start typing, the program will "rewrite" the keys to the correct ones (By default only letters are enabled. To enable additional keys enter them in the settings.)
+- At the end press `Ctrl Enter` to stop rewriting (The program will freeze during typing)
