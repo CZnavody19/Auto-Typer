@@ -1,9 +1,7 @@
-from time import sleep
 import tkinter as tk
 from types import NoneType
 import typer
-from threading import Thread
-from keyboard import press, press_and_release, release
+import json
 
 root = tk.Tk()
 
@@ -21,6 +19,17 @@ seventh_line = tk.Frame()
 
 text = ""
 edited_label = tk.Text(sixth_line, width=40, height=5)
+
+with open("options.json", "r") as options:
+    parsed_options = json.load(options)
+
+resetoptions_value = tk.BooleanVar(value=parsed_options["reset_options"])
+letter_value = tk.IntVar(value=0)
+begins_value = tk.StringVar()
+contains_value = tk.StringVar()
+repeat_value = tk.StringVar(value=0)
+nospace_value = tk.BooleanVar()
+reverse_value = tk.BooleanVar()
 
 def capture(repeat, reverse, begins, contain, nospace):
     global text
@@ -43,21 +52,32 @@ def capture(repeat, reverse, begins, contain, nospace):
         none_label.pack(side=tk.LEFT)
 
 def start():
-    with open("blocked_keys.txt", "r") as blocked_keys_txt:
-        blocked_keys = blocked_keys_txt.read()
+    with open("options.json", "r") as options:
+        parsed_options = json.load(options)
 
     if(text != NoneType and text != None):
         edited_text = edited_label.get("1.0",tk.END)
         edited_text = edited_text[:-1]
-        typer.start_typing(edited_text, blocked_keys)
+        typer.start_typing(edited_text, parsed_options["blocked_keys"])
+        if(resetoptions_value.get()):
+            letter_value.set(0)
+            begins_value.set("")
+            contains_value.set("")
+            repeat_value.set(1)
+            nospace_value.set(False)
+            reverse_value.set(False)
+            select_option()
 
 def open_settings():
     def on_closing():
-        with open("blocked_keys.txt", "w") as blocked_keys_txt:
-            blocked_keys_txt.write(blocked_keys.get("1.0",tk.END)[:-1])
+        with open("options.json", "w") as options:
+            options.write(json.dumps({"blocked_keys" : blocked_keys.get("1.0",tk.END)[:-1], "reset_options": resetoptions_value.get()}))
         
         settings_window.destroy()
-    
+
+    with open("options.json", "r") as options:
+        parsed_options = json.load(options)
+
     settings_window = tk.Toplevel(root)
     settings_window.grab_set()
     settings_window.title("Auto Typer Settings")
@@ -65,13 +85,26 @@ def open_settings():
     settings_window.resizable(False, False)
     settings_window.protocol("WM_DELETE_WINDOW", on_closing)
 
-    blocked_text = tk.Label(settings_window, text="Additional blocked keys: ")
+    settings_first_line = tk.Frame(settings_window)
+    settings_second_line = tk.Frame(settings_window)
+
+    blocked_text = tk.Label(settings_first_line, text="Additional blocked keys: ")
     blocked_text.pack(side=tk.LEFT)
-    blocked_keys = tk.Text(settings_window, height=1)
+    blocked_keys = tk.Text(settings_first_line, height=1)
+    blocked_keys.insert(tk.END, parsed_options["blocked_keys"])
     blocked_keys.pack(side=tk.LEFT)
 
-    with open("blocked_keys.txt", "r") as blocked_keys_txt:
-        blocked_keys.insert(tk.END, blocked_keys_txt.read())
+
+    resetoptions_label = tk.Label(settings_second_line, text="Reset parameters after completing: ")
+    resetoptions_label.pack(side=tk.LEFT)
+
+    resetoptions_value.set(parsed_options["reset_options"])
+    resetoptions_option = tk.Checkbutton(settings_second_line, variable=resetoptions_value, onvalue=True, offvalue=False)
+    resetoptions_option.pack(side=tk.LEFT)
+
+
+    settings_first_line.pack()
+    settings_second_line.pack()
         
 
 
@@ -99,7 +132,6 @@ menubar.add_cascade(
 repeat_label = tk.Label(first_line, text="Repeat: ")
 repeat_label.pack(side=tk.LEFT)
 
-repeat_value = tk.StringVar(value=0)
 repeat_select = tk.Spinbox(first_line, from_=1, to=10, textvariable=repeat_value)
 repeat_select.pack(side=tk.LEFT)
 
@@ -107,7 +139,6 @@ repeat_select.pack(side=tk.LEFT)
 reverse_label = tk.Label(second_line, text="Reverse: ")
 reverse_label.pack(side=tk.LEFT)
 
-reverse_value = tk.BooleanVar()
 reverse_select = tk.Checkbutton(second_line, variable=reverse_value, onvalue=True, offvalue=False)
 reverse_select.pack(side=tk.LEFT)
 
@@ -115,14 +146,10 @@ reverse_select.pack(side=tk.LEFT)
 nospace_label = tk.Label(second_line, text="No spaces: ")
 nospace_label.pack(side=tk.LEFT)
 
-nospace_value = tk.BooleanVar()
 nospace_select = tk.Checkbutton(second_line, variable=nospace_value, onvalue=True, offvalue=False)
 nospace_select.pack(side=tk.LEFT)
 
 
-letter_value = tk.IntVar(value=0)
-begins_value = tk.StringVar()
-contains_value = tk.StringVar()
 def select_option():
     if letter_value.get() == 0:
         for widget in fourth_line.winfo_children():

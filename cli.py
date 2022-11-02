@@ -1,4 +1,5 @@
 import typer
+import json
 
 def parse_bool(input):
     input = input.lower()
@@ -16,8 +17,8 @@ def main():
     contain = input("Contain: ")
     begins = input("Begins with: ")
 
-    with open("blocked_keys.txt", "r") as blocked_keys_txt:
-        additional_blocked_keys = blocked_keys_txt.read()
+    with open("options.json", "r") as options:
+        parsed_options = json.load(options)
 
     input("Enter to parse clipboard image: ")
     text = typer.capture(repeat, reverse, contain, begins, nospace)
@@ -25,7 +26,7 @@ def main():
     print("Text to type: " + text)
 
     input("Enter to hook keys: ")
-    text = typer.start_typing(text, additional_blocked_keys)
+    text = typer.start_typing(text, parsed_options["blocked_keys"])
 
 if __name__ == "__main__":
     main()
