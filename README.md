@@ -11,6 +11,8 @@ You also need [Python](https://www.python.org/) with pip and tkinter.
 
 The pip packages needed are [here](requirements.txt). Install them with `pip install -r requirements.txt`
 
+Note: In the [released version](https://github.com/CZnavody19/Auto-Typer/releases) everything is preinstalled
+
 ## How to use
 
 ### Command Line
@@ -28,7 +30,16 @@ The pip packages needed are [here](requirements.txt). Install them with `pip ins
 - At the end press `Ctrl Enter` to stop the program
 
 ### GUI
+#### Source code
 - Run the [GUI script](gui.py)
+- Configure the parameters
+- Press `Windows Shift S` and select the area of the text
+- Click `Capture` and review the text
+- Click `Start` and start typing, the program will "rewrite" the keys to the correct ones (By default only letters are enabled. To enable additional keys enter them in the settings.)
+- At the end press `Ctrl Enter` to stop rewriting (The program will freeze during typing)
+
+#### Release
+- Run `gui.exe`
 - Configure the parameters
 - Press `Windows Shift S` and select the area of the text
 - Click `Capture` and review the text
