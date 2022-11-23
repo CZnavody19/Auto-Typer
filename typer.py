@@ -6,6 +6,7 @@ from keyboard import hook_key, write, wait, unhook_all
 from string import ascii_lowercase
 
 text = ""
+#change on release to: r"Tesseract\\tesseract.exe"
 pytesseract.tesseract_cmd = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
 
 def start_typing(text_to_type, blocked_keys):
@@ -23,10 +24,10 @@ def typeLetter(param):
             write(text[0])
             text = text[::-1][:-1][::-1]
 
-def capture(repeat, reverse, contain, begins, nospace):
+def capture(repeat, reverse, contain, begins, nospace, language):
     screenshot = ImageGrab.grabclipboard()
     if(screenshot != None):
-        text = image_to_string(cvtColor(array(screenshot), COLOR_BGR2GRAY))
+        text = image_to_string(cvtColor(array(screenshot), COLOR_BGR2GRAY), lang=language)
         text = text * repeat
         if reverse:
             text = text[:-1]
